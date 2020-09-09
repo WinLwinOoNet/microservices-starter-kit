@@ -1,0 +1,12 @@
+version: "3.4"
+
+services:
+
+  mskcatalogdb:
+    image: mongo
+
+  msk.catalog.api:
+    image: ${DOCKER_REGISTRY-}mskcatalogapi
+    build:
+      context: .
+      dockerfile: src/Catalog/Msk.Catalog.Api/Dockerfile
