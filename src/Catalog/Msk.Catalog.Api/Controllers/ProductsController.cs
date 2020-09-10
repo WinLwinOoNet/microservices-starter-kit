@@ -54,7 +54,7 @@ namespace Msk.Catalog.Api.Controllers
 
         [HttpPost]
         [ProducesResponseType(typeof(IEnumerable<string>), (int)HttpStatusCode.Created)]
-        public async Task<ActionResult<Product>> PostCity([FromBody] Product product)
+        public async Task<ActionResult<Product>> CreateProduct([FromBody] Product product)
         {
             await _repository.CreateAsync(product);
             return CreatedAtAction(nameof(GetProduct), new { id = product.Id }, product);
@@ -62,7 +62,7 @@ namespace Msk.Catalog.Api.Controllers
 
         [HttpPut("{id:length(24)}")]
         [ProducesResponseType((int)HttpStatusCode.NoContent)]
-        public async Task<ActionResult> PutCity(string id, [FromBody] Product product)
+        public async Task<ActionResult> UpdateProduct(string id, [FromBody] Product product)
         {
             if (id != product.Id)
                 return BadRequest();
@@ -73,7 +73,7 @@ namespace Msk.Catalog.Api.Controllers
 
         [HttpDelete("{id:length(24)}")]
         [ProducesResponseType((int)HttpStatusCode.NoContent)]
-        public async Task<ActionResult> DeleteCity(string id)
+        public async Task<ActionResult> DeleteProduct(string id)
         {
             await _repository.DeleteAsync(id);
             return NoContent();

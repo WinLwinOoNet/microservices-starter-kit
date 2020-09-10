@@ -5,8 +5,18 @@ services:
   mskcatalogdb:
     image: mongo
 
+  mskbasketdb:
+    image: redis
+
   msk.catalog.api:
     image: ${DOCKER_REGISTRY-}mskcatalogapi
     build:
       context: .
       dockerfile: src/Catalog/Msk.Catalog.Api/Dockerfile
+
+  msk.basket.api:
+    image: ${DOCKER_REGISTRY-}mskbasketapi
+    build:
+      context: .
+      dockerfile: src/Basket/Msk.Basket.Api/Dockerfile
+
