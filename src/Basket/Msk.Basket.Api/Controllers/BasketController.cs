@@ -1,8 +1,13 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Msk.Basket.Api.Entities;
 using Msk.Basket.Api.Repositories;
+using Msk.EventBusRabbitMQ.Common;
+using Msk.EventBusRabbitMQ.Events;
+using Msk.EventBusRabbitMQ.Producer;
 
 namespace Msk.Basket.Api.Controllers
 {
@@ -11,10 +16,17 @@ namespace Msk.Basket.Api.Controllers
     public class BasketController : ControllerBase
     {
         private readonly IBasketRepository _repository;
+        private readonly IMapper _mapper;
+        private readonly EventBusRabbitMQProducer _eventBus;
 
-        public BasketController(IBasketRepository repository)
+        public BasketController(
+            IBasketRepository repository,
+            IMapper mapper,
+            EventBusRabbitMQProducer eventBus)
         {
             _repository = repository;
+            _mapper = mapper;
+            _eventBus = eventBus;
         }
 
         [HttpGet("{userName}")]
@@ -38,13 +50,34 @@ namespace Msk.Basket.Api.Controllers
             return NoContent();
         }
 
-        /*[HttpPost]
-        [Route("/Checkout")]
-        [ProducesResponseType(typeof(BasketCart), (int)HttpStatusCode.Created)]
-        public async Task<ActionResult<BasketCart>> CheckoutBasket(BasketCart basketCart)
+        [HttpPost]
+        [Route("Checkout")]
+        [ProducesResponseType((int)HttpStatusCode.Accepted)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        public async Task<ActionResult<BasketCart>> CheckoutBasket([FromBody] BasketCheckout basketCheckout)
         {
-            var basket = await _repository.CreateBasket(basketCart);
-            return CreatedAtRoute(nameof(GetBasket), new { userName = basket.UserName }, basket);
-        }*/
+            var basket = await _repository.GetBasket(basketCheckout.UserName);
+            if (basket == null)
+                return BadRequest();
+
+            var basketRemoved = await _repository.DeleteBasket(basketCheckout.UserName);
+            if (!basketRemoved)
+                return BadRequest();
+
+            var eventMessage = _mapper.Map<BasketCheckoutEvent>(basketCheckout);
+            eventMessage.RequestId = Guid.NewGuid();
+            eventMessage.TotalPrice = basket.TotalPrice;
+
+            try
+            {
+                _eventBus.PublishBasketCheckout(EventBusConstants.BasketCheckoutQueue, eventMessage);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+            return Accepted();
+        }
     }
 }

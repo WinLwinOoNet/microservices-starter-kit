@@ -8,6 +8,9 @@ services:
   mskbasketdb:
     image: redis
 
+  mskrabbitmq:
+    image: rabbitmq:3-management-alpine
+
   msk.catalog.api:
     image: ${DOCKER_REGISTRY-}mskcatalogapi
     build:

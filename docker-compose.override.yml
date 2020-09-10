@@ -10,12 +10,20 @@ services:
       - "27017:27017"
 
   mskbasketdb:
-    container_name: mskredisdb
+    container_name: mskbasketdb
     restart: always
     ports:
       - "6379:6379"
 
+  mskrabbitmq:
+    container_name: mskrabbitmq
+    restart: always
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
   msk.catalog.api:
+    container_name: mskcatalogapi
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - "CatalogDatabaseSettings:ConnectionString=mongodb://mskcatalogdb:27017"
@@ -28,11 +36,14 @@ services:
       - "8000:80"
 
   msk.basket.api:
+    container_name: mskbasketapi
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - "ConnectionStrings:Redis=mskbasketdb:6379"
+      - "EventBus:HostName=mskrabbitmq"
     depends_on:
-      - mskcatalogdb
+      - mskbasketdb
+      - mskrabbitmq
     volumes:
       - ${HOME}/.microsoft/usersecrets/:/root/.microsoft/usersecrets
       - ${HOME}/.aspnet/https:/root/.aspnet/https
