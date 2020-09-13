@@ -1,12 +1,14 @@
 version: "3.4"
 
 services:
-
   mskcatalogdb:
     image: mongo
 
   mskbasketdb:
     image: redis
+
+  mskorderdb:
+    image: mcr.microsoft.com/mssql/server
 
   mskrabbitmq:
     image: rabbitmq:3-management-alpine
@@ -22,4 +24,16 @@ services:
     build:
       context: .
       dockerfile: src/Basket/Msk.Basket.Api/Dockerfile
+
+  msk.ordering.api:
+    image: ${DOCKER_REGISTRY-}mskorderingapi
+    build:
+      context: .
+      dockerfile: src/Ordering/Msk.Ordering.Api/Dockerfile
+
+  msk.apigateway:
+    image: ${DOCKER_REGISTRY-}mskapigateway
+    build:
+      context: .
+      dockerfile: src/ApiGateway/Msk.ApiGateway/Dockerfile
 

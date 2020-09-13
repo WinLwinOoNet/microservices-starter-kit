@@ -3,7 +3,7 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:53540",
+      "applicationUrl": "http://localhost:63045",
       "sslPort": 0
     }
   },
@@ -15,9 +15,9 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "applicationUrl": "http://localhost:5001"
+      "applicationUrl": "http://localhost:5002"
     },
-    "Msk.Basket.Api": {
+    "Msk.Ordering.Api": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "weatherforecast",
@@ -26,7 +26,7 @@
       },
       "applicationUrl": "http://localhost:5000"
     },
-    "Docker": {
+    "Docker (1)": {
       "commandName": "Docker",
       "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/weatherforecast",
       "publishAllPorts": true

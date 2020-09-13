@@ -15,6 +15,14 @@ services:
     ports:
       - "6379:6379"
 
+  mskorderdb:
+    container_name: mskorderdb
+    ports:
+      - "1433:1433"
+    environment:
+      MSSQL_SA_PASSWORD: "z6NAc!Njv-WV"
+      ACCEPT_EULA: "Y"
+
   mskrabbitmq:
     container_name: mskrabbitmq
     restart: always
@@ -31,7 +39,7 @@ services:
       - mskcatalogdb
     volumes:
       - ${HOME}/.microsoft/usersecrets/:/root/.microsoft/usersecrets
-      - ${HOME}/.aspnet/https:/root/.aspnet/https
+      - ${HOME}/.aspnet/https:/root/.aspnet/https/
     ports:
       - "8000:80"
 
@@ -46,7 +54,36 @@ services:
       - mskrabbitmq
     volumes:
       - ${HOME}/.microsoft/usersecrets/:/root/.microsoft/usersecrets
-      - ${HOME}/.aspnet/https:/root/.aspnet/https
+      - ${HOME}/.aspnet/https:/root/.aspnet/https/
     ports:
       - "8001:80"
 
+  msk.ordering.api:
+    container_name: mskorderingapi
+    restart: on-failure
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "ConnectionStrings:OrderConnection=Server=mskorderdb;Database=OrderDb;User Id=sa;Password=z6NAc!Njv-WV;"
+      - "EventBus:HostName=mskrabbitmq"
+    depends_on:
+      - mskorderdb
+      - mskrabbitmq
+    volumes:
+      - ${HOME}/.microsoft/usersecrets/:/root/.microsoft/usersecrets
+      - ${HOME}/.aspnet/https:/root/.aspnet/https/
+    ports:
+      - "8002:80"
+
+  msk.apigateway:
+    container_name: mskapigateway
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    depends_on:
+      - msk.catalog.api
+      - msk.basket.api
+      - msk.ordering.api
+    volumes:
+      - ${HOME}/.microsoft/usersecrets/:/root/.microsoft/usersecrets
+      - ${HOME}/.aspnet/https:/root/.aspnet/https/
+    ports:
+      - "7000:80"
