@@ -1,12 +1,11 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Msk.WebApp.Data;
-using Msk.WebApp.Repositories;
-using Msk.WebApp.Repositories.Interfaces;
+using Microsoft.Extensions.Options;
+using Msk.WebApp.ApiCollection;
+using Msk.WebApp.Settings;
 
 namespace Msk.WebApp
 {
@@ -22,18 +21,13 @@ namespace Msk.WebApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //// use in-memory database
-            /*services.AddDbContext<MskContext>(c =>
-                c.UseInMemoryDatabase("MskConnection"));*/
+            services.Configure<ApiSettings>(Configuration.GetSection(nameof(ApiSettings)));
+            services.AddSingleton<IApiSettings>(sp => sp.GetRequiredService<IOptions<ApiSettings>>().Value);
 
-            // add database dependency
-            services.AddDbContext<MskContext>(c =>
-                c.UseSqlServer(Configuration.GetConnectionString("MskConnection")));
-
-            services.AddScoped<IProductRepository, ProductRepository>();
-            services.AddScoped<ICartRepository, CartRepository>();
-            services.AddScoped<IOrderRepository, OrderRepository>();
-            services.AddScoped<IContactRepository, ContactRepository>();
+            services.AddHttpClient();
+            services.AddTransient<ICatalogApi, CatalogApi>();
+            services.AddTransient<IBasketApi, BasketApi>();
+            services.AddTransient<IOrderApi, OrderApi>();
 
             services.AddRazorPages();
         }

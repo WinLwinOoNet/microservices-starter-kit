@@ -1,0 +1,121 @@
+{
+	"info": {
+		"_postman_id": "a9dbc673-a91e-4c9b-ad2d-09b5d066f77e",
+		"name": "Basket",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Basket",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{basket_url}}/basket/kaung",
+					"protocol": "http",
+					"host": [
+						"{{basket_url}}"
+					],
+					"path": [
+						"basket",
+						"kaung"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Basket",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"userName\": \"kaung\",\r\n    \"items\": [{\r\n        \"Quantity\": 1,\r\n        \"Color\": \"Red\",\r\n        \"Price\": 12,\r\n        \"ProductId\": \"5f5bdd9e1d45c8a2613beb9a\"\r\n    }, {\r\n        \"Quantity\": 2,\r\n        \"Color\": \"Black\",\r\n        \"Price\": 21,\r\n        \"ProductId\": \"5f5bdd9e1d45c8a2613beb9d\"\r\n    }],\r\n    \"totalPrice\": 0\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{basket_url}}/basket",
+					"protocol": "http",
+					"host": [
+						"{{basket_url}}"
+					],
+					"path": [
+						"basket"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Checkout Basket",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"userName\": \"kaung\",\r\n  \"totalPrice\": 5,\r\n  \"firstName\": \"Kaung\",\r\n  \"lastName\": \"Lwin\",\r\n  \"emailAddress\": \"kaung@lwin.us\",\r\n  \"addressLine\": \"111 Street\",\r\n  \"country\": \"USA\",\r\n  \"state\": \"WA\",\r\n  \"zipCode\": \"98101\",\r\n  \"cardName\": \"Johnd Doe\",\r\n  \"cardNumber\": \"1111-1111-1111-1111\",\r\n  \"expiration\": \"1/2021\",\r\n  \"cvv\": \"111\",\r\n  \"paymentMethod\": 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{basket_url}}/basket/checkout",
+					"protocol": "http",
+					"host": [
+						"{{basket_url}}"
+					],
+					"path": [
+						"basket",
+						"checkout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Basket",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "http://{{basket_url}}/basket/johndoe",
+					"protocol": "http",
+					"host": [
+						"{{basket_url}}"
+					],
+					"path": [
+						"basket",
+						"johndoe"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

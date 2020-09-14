@@ -1,0 +1,67 @@
+{
+	"info": {
+		"_postman_id": "12efb0d8-1c7a-468c-a5c0-d4afadfbcb3e",
+		"name": "Order",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Orders By Username",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{order_url}}/orders?userName=kaung",
+					"protocol": "http",
+					"host": [
+						"{{order_url}}"
+					],
+					"path": [
+						"orders"
+					],
+					"query": [
+						{
+							"key": "userName",
+							"value": "kaung"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Checkout Order",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"userName\": \"davidnewton\",\r\n    \"totalPrice\": 54,\r\n    \"firstName\": \"David\",\r\n    \"lastName\": \"Newton\",\r\n    \"emailAddress\": \"david@newton.com\",\r\n    \"addressLine\": \"456 Street\",\r\n    \"country\": \"USA\",\r\n    \"state\": \"KS\",\r\n    \"zipCode\": \"67206\",\r\n    \"cardName\": \"David Newton\",\r\n    \"cardNumber\": \"4567-4567-4567-4567\",\r\n    \"expiration\": \"4/2023\",\r\n    \"cvv\": \"456\",\r\n    \"paymentMethod\": 2\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{order_url}}/orders",
+					"protocol": "http",
+					"host": [
+						"{{order_url}}"
+					],
+					"path": [
+						"orders"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

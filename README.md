@@ -1,30 +1,24 @@
 # Microservices Starter Kit
 
-| Services                 | Description                                        |
-| ------------------------ | -------------------------------------------------- |
-| Product Catalog API      | ASP.NET Core Web API, MongoDB                      |
-| Shopping Cart Basket API | ASP.NET Core Web API, Redis                        |
-| Order API                | ASP.NET Core Web API, SQL Server, MediatR for CQRS |
-| Message Broker           | RabbitMQ                                           |
-| API Gateway              | Ocelet                                             |
+![Architecture](./docs/architecture.png)
 
-### Launch the solution
+Run all dockerized microservices
 
 `❯ docker-compose -f .\docker-compose.yml -f .\docker-compose.override.yml up --build`
 
-### API URLs
-
-| Services                 | Description                              |
-| ------------------------ | ---------------------------------------- |
-| Product Catalog API      | http://localhost:5000/swagger/index.html |
-| Shopping Cart Basket API | http://localhost:5001/swagger/index.html |
-| Order API                | http://localhost:5002/swagger/index.html |
-| Message Broker \*        | http://localhost:15672/#/queues          |
-| MS SQL \*\*              | Access using SSMS                        |
+| Services                 | Description                      | URL                           |
+| ------------------------ | -------------------------------- | ----------------------------- |
+| Product Catalog API      | ASP.NET Core Web API, MongoDB    | http://localhost:8000/swagger |
+| Shopping Cart Basket API | ASP.NET Core Web API, Redis      | http://localhost:8001/swagger |
+| Order API                | ASP.NET Core Web API, SQL Server | http://localhost:8002/swagger |
+| Web App                  | ASP.NET Core                     | http://localhost:8003         |
+| API Gateway              | Ocelet                           | http://localhost:7000         |
+| Message Broker\*         | RabbitMQ                         | http://localhost:15672        |
+| MS SQL\*\*               | Microsoft SQL Server             | (local)                       |
 
 \*Message Broker - Username: guest, Password: guest
 
-\*\*MS SQL - Server name: (lcoal), Username: sa, Password: Pa\$\$w0rd
+\*\*MS SQL - Username: sa, Password: _inside docker-compose.override.yml_
 
 ---
 
@@ -39,11 +33,11 @@ Alternaively, you can run following docker commands if you prefer to start conta
 
 Note: If you already run those, next time you just use `docker ps -a`, get the container id and `docker start <CONTAINER ID>`.
 
-### Troubleshooting
+# Troubleshooting
 
-If some containers such as SQL are not loading properly, use the following commands
+If some containers such as SQL are not loading properly, use the following commands -
 
-Stop all containers
+Stop all running containers
 
 `> docker ps`
 

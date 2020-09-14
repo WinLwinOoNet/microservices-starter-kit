@@ -1,0 +1,150 @@
+{
+	"info": {
+		"_postman_id": "dda1fe17-d96d-46af-8f55-e12b585f849d",
+		"name": "Catalog",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Products",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{catalog_url}}/api/v1/products",
+					"protocol": "http",
+					"host": [
+						"{{catalog_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Product By ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{catalog_url}}/api/v1/products/5f5bdd9e1d45c8a2613beb9a",
+					"protocol": "http",
+					"host": [
+						"{{catalog_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"products",
+						"5f5bdd9e1d45c8a2613beb9a"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Product",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": \"5f592129505b629061836233\",\r\n    \"name\": \"Delete Me 1\",\r\n    \"category\": \"Tablet\",\r\n    \"summary\": \"Delete 1\",\r\n    \"description\": \"Delete 1\",\r\n    \"imageFile\": \"product-7.png 1\",\r\n    \"price\": 1234\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{catalog_url}}/api/v1/products/5f593f5470423c6393cffcc9",
+					"protocol": "http",
+					"host": [
+						"{{catalog_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"products",
+						"5f593f5470423c6393cffcc9"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Product",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"iPad Prod 12.9\",\r\n    \"category\": \"Tablet\",\r\n    \"summary\": \"The world’s most advanced mobile display.\",\r\n    \"description\": \"The edge-to-edge Liquid Retina display is not only gorgeous and immersive, but also features incredibly advanced technologies. From True Tone to ProMotion, everything looks stunning and feels responsive on iPad Pro.\",\r\n    \"imageFile\": \"product-7.png 1\",\r\n    \"price\": 1099\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{catalog_url}}/api/v1/products/",
+					"protocol": "http",
+					"host": [
+						"{{catalog_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"products",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Product",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://{{catalog_url}}/api/v1/products/5f592129505b629061836233",
+					"protocol": "http",
+					"host": [
+						"{{catalog_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"products",
+						"5f592129505b629061836233"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

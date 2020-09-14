@@ -26,8 +26,8 @@ namespace Msk.Catalog.Api.Controllers
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<Product>), (int) HttpStatusCode.OK)]
         public async Task<ActionResult<IEnumerable<Product>>> GetProducts(
-            string name,
-            string categoryName)
+            string name = null,
+            string categoryName = null)
         {
             if(!string.IsNullOrWhiteSpace(name))
                 return Ok(await _repository.GetProductsByNameAsync(name));

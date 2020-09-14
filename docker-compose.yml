@@ -37,3 +37,9 @@ services:
       context: .
       dockerfile: src/ApiGateway/Msk.ApiGateway/Dockerfile
 
+  msk.webapp:
+    image: ${DOCKER_REGISTRY-}mskwebapp
+    build:
+      context: .
+      dockerfile: src/WebApp/Msk.WebApp/Dockerfile
+
